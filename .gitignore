@@ -1,1 +1,11 @@
-./3rd_party/
+# Ignore config
+.vs
+# Ignore external libs
+./3rd_party
+# Ignore compiled binaries
+*.o
+*.exe
+*.a
+*.bc
+*.so
+*.so.*
