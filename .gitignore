@@ -5,7 +5,6 @@
 # Ignore compiled binaries
 *.o
 *.exe
-*.a
 *.bc
 *.so
 *.so.*
