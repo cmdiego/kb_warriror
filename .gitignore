@@ -1,7 +1,7 @@
 # Ignore config
 .vs
 # Ignore external libs
-./3rd_party
+3rd_party
 # Ignore compiled binaries
 *.o
 *.exe
