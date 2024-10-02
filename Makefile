@@ -1,8 +1,8 @@
 # Variables
-MAIN_FILE = main.cpp
+MAIN_FILE = src/main.c
 OUTPUT_FILE = main.exe
 CXX = g++
-CXXFLAGS = -O1 -Wall -std=c99 -Wno-missing-braces -I ..\inc -L ..\lib
+CXXFLAGS = -O1 -Wall -std=c99 -Wno-missing-braces -I ./inc -L ./lib
 LIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
 OBJ_FILES = $(MAIN_FILE:.cpp=.o)
 
