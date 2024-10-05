@@ -25,12 +25,6 @@
 #include "../inc/raylib.h"
 #include "../inc/game.hpp"
 
-// Define objects
-typedef struct Player {
-    Vector2 position;
-    float speed;
-} Player;
-
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -52,16 +46,15 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+        // Check for player's inputs
         game.HandleInput();
+        // Update all game elements
         game.Update();
 
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
-
+            // Clear screen with black color
             ClearBackground(BLACK);
             //DrawRectangle(p1.position.x, p1.position.y, 50, 50, GREEN);
             game.Draw();
