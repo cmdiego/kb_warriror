@@ -10,5 +10,6 @@ class Game
         void HandleInput();
         void Update();
     private:
+        void DeleteInactiveLasers();
         Spaceship spaceship;
 };

@@ -17,6 +17,9 @@ void Game::Update()
     {
         laser.Update();
     }
+
+    // Check for inactive lasers and delete them
+    DeleteInactiveLasers();
 }
 
 void Game::Draw()
@@ -46,4 +49,22 @@ void Game::HandleInput()
     {
         spaceship.FireLaser();
     }
+}
+
+void Game::DeleteInactiveLasers() 
+{
+    // Loop through all lasers and find inactive ones
+   for(auto it = spaceship.lasers.begin(); it != spaceship.lasers.end();)
+   {
+        // if laser is inactive, erase from lasers vector
+        if(it->active == false)
+        {
+            it = spaceship.lasers.erase(it);
+        }
+        // if laser is still active, just move on to next laser on vector
+        else
+        {
+            it++;
+        }
+   }     
 }
