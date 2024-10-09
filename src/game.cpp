@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-
+    obstacles = CreateObstacles();
 }
 
 Game::~Game()
@@ -30,6 +30,11 @@ void Game::Draw()
     for(auto& laser : spaceship.lasers)
     {
         laser.Draw();
+    }
+
+    for(auto& obstacle : obstacles)
+    {
+        obstacle.Draw();
     }
 }
 
@@ -67,4 +72,21 @@ void Game::DeleteInactiveLasers()
             it++;
         }
    }     
+}
+
+std::vector<Obstacle> Game::CreateObstacles()
+{
+    // Calculate the width of each obstacle using # of columns times 3(number of pixels for each col)
+    int obstacleWidth = Obstacle::grid[0].size() * 3;
+    // Calculate gap between each obstacle. There are 4 obstacles and 5 gaps
+    float gap = (GetScreenWidth() - (obstacleWidth*4))/5;
+
+    for(int i = 0; i < 4; i++)
+    {
+        // Calculate position of each obstacle. (i+1 times gap size) + (i times obs width)
+        float offsetX = (i + 1) * gap + (i * obstacleWidth);
+        // Push the new created obstacle into obstacles vector
+        obstacles.push_back(Obstacle({offsetX, float(GetScreenHeight() - 130)}));
+    }
+    return obstacles;
 }
