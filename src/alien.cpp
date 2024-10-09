@@ -1,24 +1,32 @@
 #include "../inc/alien.hpp"
+#include "alien.hpp"
+
+Texture2D Alien::alienImages[3] = {};
 
 Alien::Alien(int type, Vector2 position)
 {
     this->type = type;
     this->position = position;
-    // Load the correct image depending on alien type
-    switch(type)
+
+    // Check if the texture for this alien has been loaded before, if not, go into switch to load
+    if(alienImages[type - 1].id == 0) 
     {
-        case 1:
-            image = LoadTexture("graphics/alien_1.png");
-            break;
-        case 2:
-            image = LoadTexture("graphics/alien_2.png");
-            break;
-        case 3:
-            image = LoadTexture("graphics/alien_3.png");
-            break;
-        default:
-            image = LoadTexture("graphics/alien_1.png");
-            break;
+        // Load the correct image depending on alien type
+        switch(type)
+        {
+            case 1:
+                alienImages[0] = LoadTexture("graphics/alien_1.png");
+                break;
+            case 2:
+                alienImages[1] = LoadTexture("graphics/alien_2.png");
+                break;
+            case 3:
+                alienImages[2] = LoadTexture("graphics/alien_3.png");
+                break;
+            default:
+                alienImages[0] = LoadTexture("graphics/alien_1.png");
+                break;
+        }
     }
 }
 
@@ -29,6 +37,19 @@ int Alien::GetType()
 
 void Alien::Draw()
 {
-    DrawTextureV(image, position, WHITE);
+    DrawTextureV(alienImages[type - 1], position, WHITE);
+}
+
+void Alien::Update(int direction)
+{
+    this->position.x += direction;
+}
+
+void Alien::UnloadImages()
+{
+    for(int i = 0; i < 3; i++)
+    {
+        UnloadTexture(alienImages[i]);
+    }
 }
 

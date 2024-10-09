@@ -3,11 +3,13 @@
 Game::Game()
 {
     obstacles = CreateObstacles();
+    aliens = CreateAliens();
+    aliensDirection = 1;
 }
 
 Game::~Game()
 {
-
+    Alien::UnloadImages();
 }
 
 void Game::Update()
@@ -17,6 +19,8 @@ void Game::Update()
     {
         laser.Update();
     }
+
+    MoveAliens();
 
     // Check for inactive lasers and delete them
     DeleteInactiveLasers();
@@ -31,10 +35,15 @@ void Game::Draw()
     {
         laser.Draw();
     }
-
+    // Draw all obstacles into screen
     for(auto& obstacle : obstacles)
     {
         obstacle.Draw();
+    }
+    // Draw all aliens into screen
+    for(auto& alien : aliens)
+    {
+        alien.Draw();
     }
 }
 
@@ -89,4 +98,64 @@ std::vector<Obstacle> Game::CreateObstacles()
         obstacles.push_back(Obstacle({offsetX, float(GetScreenHeight() - 130)}));
     }
     return obstacles;
+}
+
+std::vector<Alien> Game::CreateAliens()
+{
+    // Create aliens temp vector
+    std::vector<Alien> aliens;
+    // Create cell size for each alien
+    int cellSize = 55;
+    // Stores alien type
+    int alienType;
+    // Create a grid of alien objects and put them into aliens vector
+    for(int row = 0; row < 5; row++)
+    {
+        for(int col = 0; col < 11; col++)
+        {
+            // if alien on first row, make it type 3, and so on
+            if(row == 0)
+            {
+                alienType = 3;
+            } else if (row == 1 || row == 2)
+            {
+                alienType = 2;
+            } else
+            {
+                alienType = 1;
+            }
+            
+            // 75 and 110 are offsets to center the alien grid
+            float x = 100 + col * cellSize;
+            float y = 110 + row * cellSize;
+            aliens.push_back(Alien(alienType,{x,y}));
+        }
+    }
+    return aliens;
+}
+
+void Game::MoveAliens()
+{
+    for(auto& alien : aliens)
+    {
+        if(alien.position.x + alien.alienImages[alien.type - 1].width > GetScreenWidth())
+        {
+            aliensDirection = -1;
+            MoveDownAliens(4);
+        }
+        if(alien.position.x < 0)
+        {
+            aliensDirection = 1;
+            MoveDownAliens(4);
+        }
+        alien.Update(aliensDirection);
+    }
+}
+
+void Game::MoveDownAliens(int distance)
+{
+    for(auto& alien : aliens)
+    {
+        alien.position.y += distance;
+    }
 }
