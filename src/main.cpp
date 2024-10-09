@@ -33,7 +33,7 @@ int main(void)
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenHeight = 700;
     // Initialize window
     InitWindow(screenWidth, screenHeight, "raylib practice");
     // Initialize Game objects
